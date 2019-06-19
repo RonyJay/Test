@@ -9,7 +9,7 @@ class globla_var:
     case_depend = '5'
     data_depend = '6'
     field_depend = '7'
-    data = '8'
+    json_key = '8'
     expect = '9'
     result = '10'
 
@@ -38,8 +38,8 @@ class globla_var:
     def get_field_depend(self):
         return globla_var.field_depend
 
-    def get_data(self):
-        return globla_var.data
+    def get_json_key(self):
+        return globla_var.json_key
 
     def get_expect(self):
         return globla_var.expect
