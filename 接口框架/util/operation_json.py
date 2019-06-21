@@ -14,10 +14,13 @@ class OperationJson:
             return data
 
     # 根据关键字获取数据
-    def get_json_data(self, id):
-        return self.data[id]
+    def get_json_data(self, id=None):
+        if(id==None):
+            return None
+        else:
+            return self.data[id]
 
 
 if __name__ == '__main__':
     opers = OperationJson()
-    print(opers.get_json_data('user1'))
+    print(opers.get_json_data())

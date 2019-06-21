@@ -18,6 +18,7 @@ class RunTest(object):
             is_run = self.data.get_is_run(i)
             request_data = self.data.get_data_for_json(i)
             headers = self.data.is_header(i)
+            print(url,method,is_run,request_data,headers)
             if is_run:
                 res = self.run_method.run_main(method, url, request_data, headers)
             return res
