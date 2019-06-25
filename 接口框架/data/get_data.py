@@ -9,7 +9,7 @@ from data_config import globla_var
 class GetData(object):
     def __init__(self):
         self.opera_excel = OperationExcel()
-        self.globla=globla_var()
+        self.globla = globla_var()
 
     # 获取excel行数，就是我们的case个数
     def get_case_lines(self):
@@ -48,7 +48,7 @@ class GetData(object):
     # 获取url
     def get_request_url(self, row):
         # col = int(data_config.get_url())
-        col=int(self.globla.get_url())
+        col = int(self.globla.get_url())
         url = self.opera_excel.get_cell_value(row, col)
         return url
 
@@ -75,3 +75,8 @@ class GetData(object):
         if expect_data == '':
             return None
         return expect_data
+
+    # 写入实际结果
+    def write_result(self, row, value):
+        col = int(self.globla.get_result())
+        return self.opera_excel.write_value(row, col, value)

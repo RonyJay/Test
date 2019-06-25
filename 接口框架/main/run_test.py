@@ -24,12 +24,11 @@ class RunTest(object):
             # print(url,method,is_run,request_data,headers)
             if is_run:
                 res = self.run_method.run_main(method, url, request_data, headers)
-                print(expect_result)
-                print(res)
                 if self.common_util.is_contain(expect_result,res):
-                    print("测试成功")
+                    self.data.write_result(i,'pass')
                 else:
-                    print("测试失败")
+                    self.data.write_result(i, 'fail')
+
 
 
 if __name__ == '__main__':
