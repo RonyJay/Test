@@ -2,7 +2,7 @@
 class globla_var(object):
     # case_id
     id = '0'
-    request_name='1'
+    request_name = '1'
     url = '2'
     run = '3'
     request_way = '4'
@@ -29,7 +29,8 @@ class globla_var(object):
 
     def get_header(self):
         return globla_var.header
-        #return self.get_header()
+        # return self.get_header()
+
     def get_case_depend(self):
         return globla_var.case_depend
 

@@ -75,6 +75,15 @@ class GetData(object):
         if expect_data == '':
             return None
         return expect_data
+        # 获取依赖数据的key
+
+    def get_depend_key(self,row):
+        col = int(self.globla.get_data_depend())
+        depend_key=self.opera_excel.get_cell_value(row,col)
+        if depend_key=="":
+            return None
+        else:
+            return depend_key
 
     # 写入实际结果
     def write_result(self, row, value):
