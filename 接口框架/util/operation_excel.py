@@ -63,7 +63,7 @@ class OperationExcel:
         if col_id!=None:
             cols=self.data.col_values(col_id)
         else:
-            self.data.col_values(0)
+            cols=self.data.col_values(0)
         return cols
 
 

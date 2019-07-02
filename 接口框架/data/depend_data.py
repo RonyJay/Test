@@ -2,7 +2,9 @@
 from util.operation_excel import OperationExcel
 from base.run_method import RunMethod
 from data.get_data import GetData
-from jsonpath_rw import jsonpath,parse
+from jsonpath_rw import jsonpath, parse
+import json
+
 
 class DependdentData:
     def __init__(self, case_id):
@@ -24,12 +26,16 @@ class DependdentData:
         method = self.data.get_request_method(row_num)
         url = self.data.get_request_url(row_num)
         res = run_method.run_main(method, url, request_data, header)
-        return res
+        # jsonpath需要转换的类型是json，所以需要将res转换成json格式
+        return json.loads(res)
 
-    # 根据依赖的key，去获取执行依赖测试case的响应数据，然后返回
-    def get_data_for_depend_key(self,row):
-        depend_data=self.data.get_depend_key(row)
-        response_data=self.run_dependent()
-        json_exe=parse(depend_data)
+    # 根据依赖的key，去返回值中提取需要的数据
+    def get_data_for_depend_key(self, row):
+        depend_data = self.data.get_depend_key(row)
+        response_data = self.run_dependent()
+        # jsonpath需要转换的类型是json，所以需要将res转换成json格式
+        # print type(depend_data)
+        # print type(response_data)
+        json_exe = parse(depend_data)
         madle = json_exe.find(response_data)
         return [math.value for math in madle][0]
