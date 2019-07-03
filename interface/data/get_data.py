@@ -1,7 +1,9 @@
 # coding:utf-8
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.getcwd(), "..")))
 from util.operation_excel import OperationExcel
 from util.operation_json import OperationJson
-import data_config
 from data_config import globla_var
 
 

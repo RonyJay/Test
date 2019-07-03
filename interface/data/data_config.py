@@ -1,4 +1,5 @@
 # coding:utf-8
+
 class globla_var(object):
     # case_id
     id = '0'

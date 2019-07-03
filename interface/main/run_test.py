@@ -1,4 +1,12 @@
 # coding:utf-8
+import sys
+sys.path.append('..')
+sys.path.append('..\\base')
+sys.path.append('..\\data')
+sys.path.append('..\\dataconfig')
+sys.path.append('..\\main')
+sys.path.append('..\\util')
+
 from base.run_method import RunMethod
 from data.get_data import GetData
 from util.commom_util import CommonUtil
