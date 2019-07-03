@@ -3,6 +3,7 @@ from base.run_method import RunMethod
 from data.get_data import GetData
 from util.commom_util import CommonUtil
 from data.depend_data import DependdentData
+from util.send_email import SendEmail
 
 
 class RunTest(object):
@@ -10,6 +11,7 @@ class RunTest(object):
         self.run_method = RunMethod()
         self.data = GetData()
         self.common_util = CommonUtil()
+        self.send_email=SendEmail()
 
     # 程序执行
     def go_on_run(self):
@@ -41,8 +43,7 @@ class RunTest(object):
                 else:
                     self.data.write_result(i, res)
                     fail_count.append(i)
-        print(len(pass_count))
-        print(len(fail_count))
+        self.send_email.send_main(pass_count,fail_count)
 
 
 if __name__ == '__main__':
