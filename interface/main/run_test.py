@@ -1,5 +1,6 @@
 # coding:utf-8
 import sys
+
 sys.path.append('..')
 sys.path.append('..\\base')
 sys.path.append('..\\data')
@@ -12,6 +13,8 @@ from data.get_data import GetData
 from util.commom_util import CommonUtil
 from data.depend_data import DependdentData
 from util.send_email import SendEmail
+from util.operation_header import OperationHeader
+from util.operation_json import OperationJson
 
 
 class RunTest(object):
@@ -19,7 +22,7 @@ class RunTest(object):
         self.run_method = RunMethod()
         self.data = GetData()
         self.common_util = CommonUtil()
-        self.send_email=SendEmail()
+        self.send_email = SendEmail()
 
     # 程序执行
     def go_on_run(self):
@@ -36,6 +39,9 @@ class RunTest(object):
                 expect_result = self.data.get_expect_data(i)
                 headers = self.data.is_header(i)
                 depend_case = self.data.get_case_id_depend(i)
+                '''
+                判断依赖情况
+                '''
                 if depend_case != None:
                     self.depend_data = DependdentData(depend_case)
                     # 获取依赖的响应数据
@@ -44,14 +50,34 @@ class RunTest(object):
                     depend_field = self.data.get_field_depend(i)
                     # 更新request_data字段
                     request_data[depend_field] = depend_response_data
-                res = self.run_method.run_main(method, url, request_data, headers)
+                '''
+                判断headers情况
+                write yes no
+                '''
+                if(headers=='write'):
+                    res=self.run_method.run_main(method,url,request_data)
+                    op_heaer=OperationHeader(res)
+                    op_heaer.write_cookie()
+                elif headers=='yes':
+                    op_json = OperationJson('../dataconfig/cookie.json')
+                    #apsid是cookie的字段，根据具体项目修改
+                    cookie=op_json.get_json_data('apsid')
+                    cookies={
+                        'apsid':cookie
+                    }
+                    res=self.run_method.run_main(method,url,request_data,cookies)
+                else:
+                    res = self.run_method.run_main(method, url, request_data)
+                '''
+                写入测试结果
+                '''
                 if self.common_util.is_contain(expect_result, res):
                     self.data.write_result(i, 'pass')
                     pass_count.append(i)
                 else:
                     self.data.write_result(i, res)
                     fail_count.append(i)
-        self.send_email.send_main(pass_count,fail_count)
+        self.send_email.send_main(pass_count, fail_count)
 
 
 if __name__ == '__main__':

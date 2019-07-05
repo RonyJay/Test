@@ -3,6 +3,8 @@ from util.operation_excel import OperationExcel
 from base.run_method import RunMethod
 from data.get_data import GetData
 from jsonpath_rw import jsonpath, parse
+from util.operation_json import OperationJson
+from util.operation_header import OperationHeader
 import json
 
 
@@ -22,10 +24,23 @@ class DependdentData:
         run_method = RunMethod()
         row_num = self.opera_excel.get_row_num(self.case_id)
         request_data = self.data.get_data_for_json(row_num)
-        header = self.data.is_header(row_num)
+        headers = self.data.is_header(row_num)
         method = self.data.get_request_method(row_num)
         url = self.data.get_request_url(row_num)
-        res = run_method.run_main(method, url, request_data, header)
+        if headers=='write':
+            res= run_method.run_main(method,url,request_data)
+            op_header=OperationHeader(res)
+            op_header.write_cookie()
+        elif headers=='yes':
+            op_json=OperationJson('../config/cookie.json')
+            # apsid是cookie的字段，根据具体项目修改
+            cookie=op_json.get_json_data('apsid')
+            cookies={
+                'apsid':cookie
+            }
+            res = run_method.run_main(method, url, request_data, cookies)
+        else:
+            res=run_method.run_main(method,url,request_data)
         # jsonpath需要转换的类型是json，所以需要将res转换成json格式
         return json.loads(res)
 

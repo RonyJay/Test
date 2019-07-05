@@ -30,7 +30,6 @@ class globla_var(object):
 
     def get_header(self):
         return globla_var.header
-        # return self.get_header()
 
     def get_case_depend(self):
         return globla_var.case_depend
