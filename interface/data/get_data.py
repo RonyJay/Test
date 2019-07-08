@@ -5,6 +5,7 @@ sys.path.append(os.path.abspath(os.path.join(os.getcwd(), "..")))
 from util.operation_excel import OperationExcel
 from util.operation_json import OperationJson
 from data_config import globla_var
+from util.connect_db import OperationMysql
 
 
 # 获取到excel数据,进行初步的处理
@@ -109,3 +110,11 @@ class GetData(object):
     def write_result(self, row, value):
         col = int(self.globla.get_result())
         return self.opera_excel.write_value(row, col, value)
+
+    #根据sql，获取预期结果
+    def get_expect_data_for_mysql(self,row):
+        op_mysql=OperationMysql()
+        sql = self.get_expect_data(row)
+        res = op_mysql.search_one(sql)
+        return res.decode('unicode-escape')
+

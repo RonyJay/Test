@@ -36,7 +36,7 @@ class RunTest(object):
                 url = self.data.get_request_url(i)
                 method = self.data.get_request_method(i)
                 request_data = self.data.get_data_for_json(i)
-                expect_result = self.data.get_expect_data(i)
+                expect_result = self.data.get_expect_data_for_mysql(i)
                 headers = self.data.is_header(i)
                 depend_case = self.data.get_case_id_depend(i)
                 '''
@@ -71,7 +71,8 @@ class RunTest(object):
                 '''
                 写入测试结果
                 '''
-                if self.common_util.is_contain(expect_result, res):
+                #if self.common_util.is_contain(expect_result, res):
+                if self.common_util.is_equal_dict(expect_result,res):
                     self.data.write_result(i, 'pass')
                     pass_count.append(i)
                 else:
